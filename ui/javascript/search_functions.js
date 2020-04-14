@@ -13,6 +13,7 @@ $(document).ready(function () {
 		var lang = langStr;
 	}
 	
+	var path = $('#display_path').text();
 	var pipeline = $('#pipeline').text();
 	
 	function getURLParameter(name) {
@@ -59,7 +60,7 @@ $(document).ready(function () {
 	
 	$('.inputContainer').on('change', '.searchItemTemplate .category_list', function () {
 		var field = $(this) .children("option:selected") .val();
-		if (field.indexOf('text') > 0 || field.indexOf('display') > 0 || field=='recordId') {
+		if (field.indexOf('text') > 0 || field.indexOf('display') > 0 || field=='recordId' || field=='typeNumber') {
 			if ($(this) .parent() .children('.option_container') .children('input') .attr('class') != 'search_text') {
 				$(this) .parent() .children('.option_container') .html('');
 				$(this) .parent() .children('.option_container') .html('<input type="text" id="search_text" class="search_text form-control"/>');
@@ -81,7 +82,7 @@ $(document).ready(function () {
 			var container = $(this) .parent('.searchItemTemplate') .children('.option_container');
 			var query = assembleQuery('advancedSearchForm');
 			var q = query + ' AND ' + field + ':[* TO *]';
-			$.get('get_search_facets', {
+			$.get(path + 'get_search_facets', {
 				q: q, category: field, lang: lang, pipeline: pipeline
 			},
 			function (data) {
